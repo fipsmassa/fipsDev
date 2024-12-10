@@ -9,6 +9,9 @@ export default defineConfig({
     nav: [
       { text: "Home", link: "/" },
       { text: "Examples", link: "/markdown-examples" },
+      { text: "CSS", link: "/css" },
+      { text: "JS", link: "/js" },
+      { text: "HTML", link: "/html" },
     ],
 
     sidebar: [
@@ -19,7 +22,20 @@ export default defineConfig({
           { text: "Runtime API Examples", link: "/api-examples" },
         ],
       },
+      {
+        text: "CSS",
+        items: [
+          {
+            text: "Grid",
+            link: "/css/grid",
+          },
+        ],
+      },
     ],
+
+    search: {
+      provider: "local",
+    },
 
     socialLinks: [
       { icon: "github", link: "https://github.com/vuejs/vitepress" },
