@@ -1,10 +1,27 @@
 # Master CSS Grid
 
 ::: tip TLDR;
-Todo
 
-- add Screenshots
-  :::
+1. **What is CSS Grid?**  
+   A two-dimensional layout system in CSS for creating responsive designs with rows and columns—no hacks required!
+
+   - Start by adding `display: grid;` to a container.
+   - Define structure using `grid-template-rows` and `grid-template-columns`.
+
+2. **Placing Items in the Grid:**  
+   Position grid items precisely with:
+
+   - `grid-column` and `grid-row`: Specify start and end lines.
+   - `grid-area`: Use shorthand for row and column placement.
+
+3. **Named Grid Areas:**  
+   Simplify layout management by defining and assigning semantic names to grid sections using `grid-template-areas`.
+
+4. **Responsive Grids:**  
+   Use the `fr` unit for proportional spacing and `auto-fit` with `minmax()` for dynamic layouts that adapt to screen sizes.
+
+CSS Grid is flexible, powerful, and intuitive—perfect for modern web design. Use it!
+:::
 
 [[toc]]
 
@@ -26,24 +43,29 @@ To begin using CSS Grid, you need two things:
 Here’s an example:
 
 ```html
-<div class="container">
-  <div class="item1">Item 1</div>
-  <div class="item2">Item 2</div>
-  <div class="item3">Item 3</div>
+<div class="grid-container some-additional-class ">
+  <div class="item1">1</div>
+  <div class="item2">2</div>
+  <div class="item3">3</div>
+  <div class="item4">4</div>
 </div>
 ```
 
 To make the container a grid, add the following CSS:
 
 ```css
-.container {
+.grid-container {
   display: grid;
 }
 ```
 
-Congrats! Now you’re using CSS Grid! :tada:
+Congrats! You’re now using CSS Grid! :tada:
 
-But by default, this doesn’t define rows or columns. To create structure, we use **grid-template-rows** and **grid-template-columns**.
+::: details Result {open}
+![Basic grid usage](./images/grid-1.png)
+:::
+
+You just can't see it :sweat_smile: Because by default, this doesn’t define rows or columns. To create structure, we use **grid-template-rows** and **grid-template-columns**.
 
 ### Defining Rows and Columns
 
@@ -57,9 +79,9 @@ Rows and columns are defined by specifying their size using units like:
 Here’s an example:
 
 ```css
-.container {
+.grid-container {
   display: grid;
-  grid-template-columns: 100px 200px auto;
+  grid-template-columns: 150px 200px auto;
   grid-template-rows: 50px auto;
 }
 ```
@@ -68,15 +90,20 @@ Here’s an example:
 
 Columns:
 
-- The first column is 100px wide.
+- The first column is 150px wide.
 - The second column is 200px wide.
 - The third column expands to fill remaining space.
+- The fourth column breaks into the next line.
 
 Rows:
 
 - The first row is 50px tall.
 - The second row adjusts automatically to fit its content.
 - By mixing and matching these units, you can create incredibly flexible grids.
+
+::: details Result {open}
+![grid with row and columns](./images/grid-2.png)
+:::
 
 ## Placing Items in the Grid
 
@@ -101,9 +128,10 @@ Here’s an example:
 In this case:
 
 _.item1_ starts in column 1 and spans two columns (up to column 3).
-It starts in row 2 and spans two rows (up to row 4).
+It starts in row 2 and spans two rows (up to row 4, but since we only have two rows, it's not visible).
 
 **Using Shorthand**
+
 Instead of writing grid-column and grid-row separately, you can use the shorthand grid-area:
 
 ```css
@@ -114,30 +142,51 @@ Instead of writing grid-column and grid-row separately, you can use the shorthan
 
 This achieves the same result but keeps the code more compact.
 
-**Default Placement**
-If you don’t specify placement, Grid will automatically place items in the next available cell. This is great for simple layouts, but for more complex designs, custom placement is key.
+::: details Result {open}
+![grid with grid-area](./images/grid-3.png)
+:::
 
-### Practical Example
+**Default Placement**
+
+If you don’t specify placement, Grid will automatically place items in the next available cell. This is great for simple layouts, but for more complex designs, custom placement is needed.
+
+### Example
 
 Let’s combine everything into a complete example:
 
 ```css
-.container {
+.grid-container {
   display: grid;
   grid-template-columns: 150px 1fr 150px;
-  grid-template-rows: 100px auto 100px;
+  grid-template-rows: 50px auto 50px;
 }
 
 .item1 {
+  background-color: #ff6b6b;
   grid-column: 1 / 4; /* Spans all columns */
   grid-row: 1; /* Stays in the first row */
 }
 
 .item2 {
+  background-color: #4dabf7;
   grid-column: 2; /* Stays in the second column */
+}
+
+.item3 {
+  background-color: #51cf66;
+  grid-column: 1; /* Stays in the first column */
   grid-row: 2; /* Stays in the second row */
 }
+
+.item4 {
+  background-color: #f59f00;
+  grid-row: 3; /* Stays in the third row */
+}
 ```
+
+::: details Result {open}
+![complete grid example](./images/grid-4.png)
+:::
 
 With these simple rules, you can precisely control where items appear in your layout.
 
@@ -150,11 +199,12 @@ Named grid areas take the guesswork out of positioning. Instead of using numeric
 Here’s how you define named grid areas:
 
 ```css
-.container {
+.grid-container {
   display: grid;
   grid-template-areas:
     "header header"
-    "sidebar content";
+    "sidebar content"
+    "footer footer";
 }
 ```
 
@@ -162,6 +212,7 @@ This grid has:
 
 - A header spanning two columns.
 - A sidebar and content sharing the second row.
+- A footer spanning two columns.
 
 **Assigning Items to Areas**
 Now assign the grid items to the named areas:
@@ -176,21 +227,34 @@ Now assign the grid items to the named areas:
 .content {
   grid-area: content;
 }
+.footer {
+  grid-area: content;
+}
 ```
+
+::: details Result {open}
+![named grid areas](./images/grid-5.png)
+:::
 
 This approach makes your layouts far easier to understand and maintain, especially for complex designs.
 
 **Flexibility with Named Areas**
-Changing the layout is as simple as updating grid-template-areas. For example, to move the sidebar below the content:
+
+Changing the layout is as simple as updating grid-template-areas. For example, to move the sidebar on the other side:
 
 ```css
-.container {
+.grid-container {
+  display: grid;
   grid-template-areas:
     "header header"
-    "content content"
-    "sidebar sidebar";
+    "content sidebar"
+    "footer footer";
 }
 ```
+
+::: details Result {open}
+![sidear on the other side](./images/grid-6.png)
+:::
 
 ## Responsive CSS Grid with Fractions and Auto-Fit
 
@@ -201,16 +265,23 @@ Responsive design is crucial for modern web development, and CSS Grid makes it e
 The fr unit lets you distribute available space across columns or rows. For example:
 
 ```css
-.container {
+.grid-container {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-areas:
+    "header header header"
+    "content sidebar footer";
+  grid-template-columns: 1fr 3fr 1fr;
 }
 ```
 
 This creates a grid with three columns:
 
 - The first and third columns take up one fraction each.
-- The second column takes up two fractions.
+- The second column takes up three fractions.
+
+::: details Result {open}
+![grid with fractions](./images/grid-7.png)
+:::
 
 ### Auto-Fit for Dynamic Grids
 
@@ -219,33 +290,30 @@ To create grids that adjust based on available space, use auto-fit with repeat a
 ```css
 .container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 }
 ```
 
 What this does:
 
 - The auto-fit keyword creates as many columns as will fit in the container.
-- Each column is at least 150px wide but can grow to share space with other columns.
+- Each column is at least 100px wide but can grow to share space with other columns.
 
-### Example: Responsive Grid
+::: details Result {open}
+![fullscreen grid](./images/grid-8.png)
+:::
 
-Here’s how you might use a responsive grid for a gallery:
+When the screen get's smaller, the areas break into new rows, so that the min-width of 100px is kept:
 
-```css
-.container {
-  display: grid;
-  gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-}
+::: details Responsive Result (Screen < 400px) {open}
+![fullscreen grid](./images/grid-9.png)
+:::
 
-.item {
-  background: #eee;
-  height: 200px;
-}
-```
+Eventually each item will end up in a seperate row:
 
-This ensures your gallery looks great on any screen size.
+::: details Responsive Result (Screen < 200px) {open}
+![fullscreen grid](./images/grid-10.png)
+:::
 
 ## Conclusion
 

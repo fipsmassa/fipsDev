@@ -1,3 +1,5 @@
 # CSS
 
-This is the entry point for the CSS section
+Discover the first Article:
+
+- [Master CSS Grid](/css/grid)

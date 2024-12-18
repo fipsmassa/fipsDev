@@ -4,12 +4,27 @@ layout: home
 
 hero:
   name: "FipsDev"
-  text: "Personal Blog"
-  tagline: My great project tagline
----
+  text: "Personal Blog / Docs"
+  tagline: All about HTML, CSS and JS (and maybe other stuff in the future) 👋
+  image:
+    src: /brackets.png
+    alt: FipsDev
+  actions:
+    - theme: brand
+      text: Master CSS Grid
+      link: /css/grid
 
-<a href="/css/grid" style="display: block; width:32%; margin: auto; padding: .75rem; border: 2px #e5e7eb solid; border-radius: 1rem;">
-    <h2 style="font-size: 1.25rem; line-height: 1.75rem; font-weight: 700;">My new Article</h2>
-    <small>2023-05-29</small>
-    <p>Est commodi iusto et alias deleniti sed voluptatibus tempora est reprehenderit autem...</p>
-</a>
+features:
+  - icon: 📄
+    title: HTML
+    details: Build the backbone of the web
+    link: "/html"
+  - icon: 🖌️
+    title: CSS
+    details: Design with style and elegance
+    link: "/css"
+  - icon: 🛠️
+    title: JS
+    details: Add life to your website
+    link: "/js"
+---
